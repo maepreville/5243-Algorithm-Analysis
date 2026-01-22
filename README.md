@@ -5,7 +5,7 @@
 
 #### Image:
 
-<img src="https://thumbs2.imgbox.com/77/96/Ja9TcPrH_t.jpg" width="200">
+<img src="https://github.com/maepreville/5243-Algorithms/blob/main/80155468-C5B6-4161-BDDF-74D1F181B50F.JPG?raw=true" width="200">
 
 #### Avatar:
 
