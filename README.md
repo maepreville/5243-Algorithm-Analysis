@@ -9,4 +9,4 @@
 
 #### Avatar:
 
-<img src="https://private-user-images.githubusercontent.com/…N0In0.htp5v5Wg-d6WxpyfzPgINeRtDj9bVud4TmCfp6sey6Q" width="75">
+<img src="https://github.com/maepreville/5243-Algorithms/blob/main/WhatsApp%20Image%202026-01-21%20at%2010.06.44%20PM.jpeg?raw=true" width="75">
