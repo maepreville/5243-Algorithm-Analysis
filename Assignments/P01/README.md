@@ -1,8 +1,5 @@
 ## Assignment 3 - BST Delete
 
-#### Due: 02-03-2025 (Tuesday by Classtime)
-
-# **Assignment: Implementing Delete in a Binary Search Tree (BST)**
 **Write a short explanation (minimum 200 words)** covering:
    - The cases you handled for deletion.
    - The logic behind choosing a replacement value for nodes with two children.
