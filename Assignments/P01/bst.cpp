@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -66,62 +67,103 @@ class Bst {
     Node *root;
 
     void _print(Node *subroot) {
+        if (!subroot) return;
+        _print(subroot->left);
+        cout << subroot->data << " ";
+        _print(subroot->right);
+    }
+
+    void _insert(Node *&subroot, int x) {
         if (!subroot) {
-            return;
+            subroot = new Node(x);
+        } else if (x < subroot->data) {
+            _insert(subroot->left, x);
         } else {
-            _print(subroot->left);
-            cout << subroot->data << " ";
-            _print(subroot->right);
+            _insert(subroot->right, x);
         }
     }
-    void _insert(Node *&subroot, int x) {
-        if (!subroot) { // if(root == nullptr)
-            subroot = new Node(x);
-        } else {
-            if (x < subroot->data) {
-                _insert(subroot->left, x);
-            } else {
-                _insert(subroot->right, x);
+
+    int _ipl(Node *root, int depth = 0) {
+        if (!root) return 0;
+        return depth + _ipl(root->left, depth + 1) + _ipl(root->right, depth + 1);
+    }
+
+    /**
+     * Helper function to find the minimum value node in a subtree.
+     * Used to find the inorder successor.
+     */
+    Node* minimumValue(Node* curr) {
+        Node* current = current->right;
+        while (curr != NULL && curr->left != NULL)
+            current = current->left;
+        return current;
+    }
+
+    /**
+     * Deletes a node with the given x from the BST.
+     */
+    void deleteNode(Node*& subroot, int x) {
+        if (!subroot)
+            return; // If x not found
+
+        if (x < subroot->data) {
+            deleteNode(subroot->left, x);
+        } 
+        else if (x > subroot->data) {
+            deleteNode(subroot->right, x);
+        } 
+        else {
+            // Node found
+
+            // Case 1: No children (leaf node)
+            if (!subroot->left && !subroot->right) {
+                delete subroot;
+                subroot = nullptr;
+            }
+            // Case 2: 
+            //1st instance: child (right)
+            else if (!subroot->left) {
+                Node* temp = subroot;
+                subroot = subroot->right;
+                delete temp;
+            }
+            // 2nd instance: One child (left)
+            else if (!subroot->right) {
+                Node* temp = subroot;
+                subroot = subroot->left;
+                delete temp;
+            }
+            // Case 3: Two children
+            else {
+                //Inorder Successor (smallest in right subtree)
+                Node* successor = minimumValue(subroot->right);
+                subroot->data = successor->data;
+                subroot->right = deleteNode(subroot->right, successor->data);
+
+                /*
+                //Inorder Predecessor (largest in left subtree)
+                Node* predecessor = _maxValueNode(subroot->left);
+                subroot->data = predecessor->data;
+                deleteNode(subroot->left, predecessor->data);
+                */
             }
         }
-    }
-    int _ipl(Node *root, int depth = 0) {
-        if (!root)
-            return 0; // Base case: Empty subtree contributes 0 to IPL
-        return depth + _ipl(root->left, depth + 1) + _ipl(root->right, depth + 1);
     }
 
 public:
     Bst() { root = nullptr; }
+
     void insert(int x) { _insert(root, x); }
-    bool search(int key) { return 0; }
+
+    void remove(int x) { deleteNode(root, x); }
+
     void print() { _print(root); }
+
     void saveDotFile(const std::string &filename) {
         std::string dotContent = GraphvizBST::generateDot(root);
         GraphvizBST::saveDotFile(filename, dotContent);
     }
 
-    /**
-     * Computes the Internal Path Length (IPL) of a Binary Search Tree (BST).
-     *
-     * Definition:
-     * The Internal Path Length (IPL) of a BST is the sum of the depths of all nodes in the tree.
-     * The depth of a node is the number of edges from the root to that node.
-     *
-     * Example:
-     *        10
-     *       /  \
-     *      5    15
-     *     / \     \
-     *    2   7    20
-     *
-     * IPL = (depth of 10) + (depth of 5) + (depth of 15) + (depth of 2) + (depth of 7) + (depth of 20)
-     *     = 0 + 1 + 1 + 2 + 2 + 2 = 8
-     *
-     * @param root Pointer to the root node of the BST.
-     * @param depth Current depth of the node (default is 0 for the root call).
-     * @return The sum of depths of all nodes (Internal Path Length).
-     */
     int ipl() {
         return _ipl(root);
     }
@@ -137,24 +179,6 @@ bool unique_value(int *arr, int n, int x) {
 }
 
 int main() {
-    Bst tree;
-    int root = pow(2, 15) / 2;
-    int max = pow(2, 15) - 1;
-    vector<int> arr;
-    arr.push_back(root);
-    tree.insert(root);
-    for (int i = 1; i < 5000; i++) {
-        int r = rand() % max;
-        while (!unique_value(arr.data(), arr.size(), r)) {
-            r = rand() % max;
-        }
-        tree.insert(r);
-        arr.push_back(r);
-    }
-
-    tree.print();
-    tree.saveDotFile("bst_snapshot.dot");
-
     Bst tree2;
     tree2.insert(10);
     tree2.insert(5);
@@ -162,5 +186,16 @@ int main() {
     tree2.insert(2);
     tree2.insert(7);
     tree2.insert(20);
+
+    cout << "Before deletion: ";
+    tree2.print();
+    cout << endl;
+
+    tree2.remove(10); // delete node with two children
+
+    cout << "After deletion: ";
+    tree2.print();
+    cout << endl;
+
     cout << "Internal Path Length: " << tree2.ipl() << endl;
 }
