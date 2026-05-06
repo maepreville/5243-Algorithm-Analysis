@@ -1,4 +1,4 @@
-## Program 2 
+# Program 2 
 
 Description: 
 The goal of this program is to track stats for each of the data structures we have been discussing as they process the same data sets. Below is the list of arrays and the workloads/datasets that worked well for each.
@@ -10,8 +10,8 @@ The goal of this program is to track stats for each of the data structures we ha
 - Linked List
 - Sorted Array Set
 
-## Report/Analysis of the data structures:
-# AVL
+# Report/Analysis of the data structures:
+## AVL
 
 It is a self-balancing variant of the Binary Search Tree. It enforces a strict structural invariant where the heights of any node's two subtrees differ by at most one, performing single or double pointer rotations during updates to fix imbalances.
 
@@ -24,7 +24,7 @@ The AVL tree guarantees a tight logarithmic search boundary under all circumstan
 Why does one structure outperform another?
 It excels on workload D due to its minimal lookup depth.
 
-# Binary Heap
+## Binary Heap
 
 It is a self-balancing variant of the Binary Search Tree. It enforces a strict structural invariant where the heights of any node's two subtrees differ by at most one, performing single or double pointer rotations during updates to fix imbalances.
 
@@ -34,7 +34,7 @@ This algorithm worked well with Workload C. It works well with pure batch sequen
 Where does the work happen?
 Heaps excel at handling structural changes efficiently, processing insertions and peak deletions.
 
-# Binary Search Tree
+## Binary Search Tree
 
 It is best to use a binary search tree for fast, organized data storage where values will be frequently searched, inserted, and deleted. If the structure is balanced, it would take on average O(log n) for search time.
 
@@ -47,7 +47,7 @@ The work really happens from the root all the way to the relevant nodes, perform
 Why does one structure outperform another?
 A BST outperforms other data structures when you need fast searches along with frequent insertions and deletions, and when maintaining order or performing range queries is important. Workload B is sorted, which forces the plain BST to degenerate into a linear chain (resembling a linked list) with an efficiency profile of O(n).
 
-# Hash Table
+## Hash Table
 A hash table is best when order doesn't matter, and you're seeking fast lookups, insertions, and deletions. It uses O(1) complexity.
 
 It is best to use a hash table for very fast data lookup, insertion, and deletion when the order of elements does not matter. Operations on a good hash table take O(1) on average for search, insert, and delete.
@@ -58,7 +58,7 @@ The best work file were Workload A and Workload C. These workloads had spread va
 Where does the work happen?
 It functions best when operations are scattered symmetrically across the bucket structure, minimizing single-bucket collision chains. It handles mixed mutations (Workload C) smoothly because indexing logic operates at a constant O(1) time complexity before bucket chain evaluation.
 
-# Linked List
+## Linked List
 A linked list is best used when data is often modified and if random access is not a must. 
 
 It is best to use a linked list for dynamic data storage where elements are frequently inserted or deleted, especially at the beginning or end of the list. Searching for a specific element, however, takes O(n) time because the list must be traversed.
@@ -72,7 +72,7 @@ The work happens along the nodes that need to be accessed or modified. Insertion
 Why does one structure outperform another?
 It runs efficiently only on small inputs (N <= 1000). On larger workloads (N = 20000), its O(n) search complexity degrades performance significantly.
 
-# Sorted Array Set
+## Sorted Array Set
 A sorted array is an algorithm that keeps elements in a contiguous block of memory sorted in ascending order.
 
 It is best to use a sorted array for datasets where fast searching is needed and insertions or deletions are infrequent. Searching can be done using binary search in O(log n) time, but inserting or deleting an element requires shifting elements, which takes O(n) time.
